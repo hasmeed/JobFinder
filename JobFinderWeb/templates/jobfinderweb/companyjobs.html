@@ -1,0 +1,64 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} Company Jobs {% endblock title %}
+
+{% block content %}
+  <header class="page-header bg-img size-lg" style="background-image: url({% static "img/bg-banner1.jpg" %})">
+      <div class="container no-shadow">
+        <h1 class="text-center">Manage jobs</h1>
+        <p class="lead text-center">Here's the list of your submitted jobs. You can edit or delete them, or even add a new one.</p>
+      </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+      <section class="no-padding-top bg-alt">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-xs-12 text-right">
+            {% include 'JobFinderWeb/message.html' %}
+              <br>
+              <a class="btn btn-primary btn-sm" href='{% url 'JobFinderWeb:newjob' %}'>Add new job</a>
+            </div>
+
+
+            <!-- Job detail -->
+            {% for job in object_list %}
+                <div class="col-xs-12">
+              <div class="item-block">
+                <header>
+                  <a href="{{ job.get_absolute_url }}"><img src='{% static "img/logo-google.jpg" %}' alt=""></a>
+                  <div class="hgroup">
+                    <h4><a href="{{ job.get_absolute_url }}">{{ job.jobtitle }}</a></h4>
+                    <h5><a href="{{ job.Company.get_absolute_url }}">{{ job.Company }}</a></h5>
+                  </div>
+                  <div class="header-meta">
+                    <span class="location">{{ job.location }}</span>
+                    <time datetime="2016-03-10 20:00">Posted {{ job.updated | timesince }} ago</time>
+                  </div>
+                </header>
+
+                <footer>
+                  <p class="status"><strong>Status:</strong> {{ job.jobstatus }}</p>
+
+                  <div class="action-btn">
+                    <a class="btn btn-xs btn-gray" href='{% url 'JobFinderWeb:updatejob' slug=job.slug %}'>Edit</a>
+                    <a class="btn btn-xs btn-danger" href='{% url 'JobFinderWeb:deletejob' slug=job.slug %}'>Delete</a>
+                  </div>
+                </footer>
+              </div>
+            </div>
+            {% endfor %}
+            
+            <!-- END Job detail -->
+
+
+
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} {{ object.name }} {% endblock title %}
+{% block content %}
+
+  <header class="page-header bg-img" style="background-image: url({% static "img/bg-banner1.jpg" %})">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <img src='{% static "img/avatar.jpg" %}' alt="">
+          </div>
+
+          <div class="col-xs-12 col-sm-8 header-detail">
+            <div class="hgroup">
+              <h1>{{ object }}</h1>
+              <h3>{{ object.headline }}</h3>
+            </div>
+            <hr>
+            <p class="lead">{{object.shortdescription}}</p>
+
+            <ul class="details cols-2">
+              <li>
+                <i class="fa fa-map-marker"></i>
+                <span>{{ object.location }}</span>
+              </li>
+
+              <li>
+                <i class="fa fa-globe"></i>
+                <a href="#">{{ object.website }}</a>
+              </li>
+
+              <li>
+                <i class="fa fa-money"></i>
+                <span>${{ object.salary }} / hour</span>
+              </li>
+
+              <li>
+                <i class="fa fa-birthday-cake"></i>
+                <span>{{ object.age }} years-old</span>
+              </li>
+
+              <li>
+                <i class="fa fa-phone"></i>
+                <span>{{ object.mobile }}</span>
+              </li>
+
+              <li>
+                <i class="fa fa-envelope"></i>
+                <a href="#">{{ object.email }}</a>
+              </li>
+            </ul>
+
+            <div class="tag-list">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>Bootstrap</span>
+              <span>ReactJS</span>
+              <span>SASS / LESS</span>
+              <span>Grunt / Gulp</span>
+              <span>Wordpress</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <ul class="social-icons">
+            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+          </ul>
+
+          <div class="action-buttons">
+            <a class="btn btn-gray" href="#">Download CV</a>
+            <a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contact me</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+
+
+      <!-- Education -->
+      <section>
+        <div class="container">
+
+          <header class="section-header">
+            <span>Latest degrees</span>
+            <h2>Education</h2>
+          </header>
+          
+          <div class="row">
+          {% for edu in educations %}
+            <div class="col-xs-12">
+              <div class="item-block">
+                <header>
+                  <img src='{% static "img/logo-mit.png" %}' alt="">
+                  <div class="hgroup">
+                    <h4>{{ edu.degree }} <small>{{ edu.major }}</small></h4>
+                    <h5>{{ edu.school }}</h5>
+                  </div>
+                  <h6 class="time">{{ edu.datefrom }} - {{ edu.dateto }}</h6>
+                </header>
+                <div class="item-body">
+                {% comment %} <p>{{ edu.shortdescription }}</p> {% endcomment %}
+                  <p>The Massachusetts Institute of Technology (MIT) is a private research university in Cambridge, Massachusetts. Founded in 1861 in response to the increasing industrialization of the United States, MIT adopted a European polytechnic university model and stressed laboratory instruction in applied science and engineering.</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+            
+          </div>
+
+        </div>
+      </section>
+      <!-- END Education -->
+
+
+      <!-- Work Experience -->
+      <section class="bg-alt">
+        <div class="container">
+          <header class="section-header">
+            <span>Past positions</span>
+            <h2>Work Experience</h2>
+          </header>
+          
+          <div class="row">
+
+            <!-- Work item -->
+            {% for work in experience %}
+                     <div class="col-xs-12">
+              <div class="item-block">
+                <header>
+                  <img src='{% static "img/logo-google.jpg" %}' alt="">
+                  <div class="hgroup">
+                    <h4>{{ work.companyname }}</h4>
+                    <h5>{{ work.position }}</h5>
+                  </div>
+                  <h6 class="time">{{ work.datefrom }} - {{ work.dateto }}</h6>
+                </header>
+                <div class="item-body">
+                  <p>Responsibilities:</p>
+                  <ul>
+                    <li>Developed front-end for world-class online social viewing video and chat platform using xHTML, CSS, ActionScript 2-3, Javascript, and XML.</li>
+                    <li>Developed built-in chat application into Flash video player in ActionScript 3.</li>
+                    <li>Built and developed sites for ABC Family properties such as Gilmore Girls, The Middleman, Secret Life of an American Teenager, Greek, and Kyle XY. </li>
+                    <li>Translate designs into responsive web interfaces </li>
+                    <li>Collaboration with the graphic designer on the front-end aspect of development. </li>
+                    <li>Cross-platform cross-browser development. </li>
+                    <li>Some back-end development in collaboration with senior developer.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+           
+            <!-- END Work item -->
+
+
+           
+          </div>
+
+        </div>
+      </section>
+      <!-- END Work Experience -->
+
+
+      <!-- Skills -->
+      <section>
+        <div class="container">
+          <header class="section-header">
+            <span>Expertise Areas</span>
+            <h2>Skills</h2>
+          </header>
+          
+          <br>
+          <ul class="skills cols-3">
+          {% for skill in skills %}
+            <li>
+              <div>
+                <span class="skill-name">{{ skill.skillname }}</span>
+                <span class="skill-value">{{ skill.proficiency }}%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: {{ skill.proficiency }}%;"></div>
+              </div>
+            </li>
+          {% endfor %}
+            
+            {% comment %} <li>
+              <div>
+                <span class="skill-name">CSS</span>
+                <span class="skill-value">95%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 95%;"></div>
+              </div>
+            </li>
+
+            <li>
+              <div>
+                <span class="skill-name">Javascript</span>
+                <span class="skill-value">80%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 80%;"></div>
+              </div>
+            </li>
+
+            <li>
+              <div>
+                <span class="skill-name">Photoshop</span>
+                <span class="skill-value">60%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 60%;"></div>
+              </div>
+            </li>
+
+            <li>
+              <div>
+                <span class="skill-name">ReactJS</span>
+                <span class="skill-value">70%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 70%;"></div>
+              </div>
+            </li>
+
+            <li>
+              <div>
+                <span class="skill-name">Team work</span>
+                <span class="skill-value">90%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 90%;"></div>
+              </div>
+            </li> {% endcomment %}
+          </ul>
+
+        </div>
+      </section>
+      <!-- END Skills -->
+
+
+    </main>
+
+{% endblock %}

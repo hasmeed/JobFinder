@@ -1,0 +1,453 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} New Resumee {% endblock title %}
+{% block content %}
+
+  <form method="POST">
+  {% csrf_token %}
+  <span>{{ form.errors }}</span>
+      <!-- Page header -->
+      <header class="page-header">
+        <div class="container page-name">
+          <h1 class="text-center">{{ title }}</h1>
+          <p class="lead text-center">Create your resume and put it online.</p>
+        </div>
+
+        <div class="container">
+
+          <div class="row">
+            <div class="col-xs-12 col-sm-4">
+              <div class="form-group">
+                <input type="file" class="dropify" data-default-file='{% static "img/avatar.jpg" %}'>
+                <span class="help-block">Please choose a 4:6 profile picture.</span>
+              </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-8">
+              <div class="form-group">
+                <input type="text" value="{{ form.name.value }}" name="name" class="form-control input-lg" placeholder="Name" >
+              </div>
+              
+              <div class="form-group">
+                <input name="headline" value="{{ form.headline.value }}" type="text" class="form-control" placeholder="Headline (e.g. Front-end developer)">
+              </div>
+
+              <div class="form-group">
+                <textarea name="shortdescription" class="form-control" rows="3" placeholder="Short description about you">{{ form.shordescription.value }}</textarea>
+              </div>
+
+              <hr class="hr-lg"> 
+
+              <h6>Basic information</h6>
+              <div class="row">
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                    <input name="location" value="{{ form.location.value }}" type="text" class="form-control" placeholder="Location, e.g. Melon Park, CA">
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                    <input name="website" value="{{ form.website.value }}" type="text" class="form-control" placeholder="Website address">
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                    <input name="salary" value="{{ form.salary.value }}" type="text" class="form-control" placeholder="Salary, e.g. 85">
+                    <span class="input-group-addon">Per hour</span>
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
+                    <input name="age" type="text" value="{{ form.age.value }}" class="form-control" placeholder="Age">
+                    <span class="input-group-addon">Years old</span>
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                    <input name="mobile" type="text" value="{{ form.mobile.value }}" class="form-control" placeholder="Phone number">
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-6">
+                  <div class="input-group input-group-sm">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    <input name="email" type="text" value="{{ form.email.value }}" class="form-control" placeholder="Email address">
+                  </div>
+                </div>
+
+              </div>
+
+              <hr class="hr-lg">
+
+              <h6>Tags list</h6>
+              <div class="form-group">
+                <input type="text" value="HTML,CSS,Javascript" data-role="tagsinput" placeholder="Tag name">
+                <span class="help-block">Write tag name and press enter</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="button-group">
+            <div class="action-buttons">
+
+              <div class="upload-button">
+                <button class="btn btn-block btn-gray">Choose a resume file</button>
+                <input type="file">
+              </div>
+
+              <div class="upload-button">
+                <button class="btn btn-block btn-primary">Choose a cover image</button>
+                <input id="cover_img_file" type="file">
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- END Page header -->
+
+
+      <!-- Main container -->
+      <main>
+
+
+        <!-- Social media -->
+        <section>
+          <div class="container">
+
+            <header class="section-header">
+              <span>Get connected</span>
+              <h2>Social media</h2>
+            </header>
+
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                    <input name="facebook" value="{{ form.facebook.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
+                    <input name="google" value="{{ form.google.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-dribbble"></i></span>
+                    <input name="dribbble" value="{{ form.dribbble.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pinterest"></i></span>
+                    <input name="pinterest" type="text" value="{{ form.pinterest.value }}" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                    <input name="twitter" value="{{ form.twitter.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-github"></i></span>
+                    <input name="git" type="text" value="{{ form.git.value }}" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-instagram"></i></span>
+                    <input name="instagram" value="{{ form.instagram.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-youtube"></i></span>
+                    <input name="youtube" value="{{ form.youtube.value }}" type="text" class="form-control" placeholder="Profile URL">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+        <!-- Social media -->
+
+
+
+        <!-- Education -->
+        <section class=" bg-alt">
+          <div class="container">
+
+            <header class="section-header">
+              <span>Latest degrees</span>
+              <h2>Education</h2>
+            </header>
+            
+            <div class="row">
+              {{ education_form.management_form }}
+              {{ formset.errors }}
+              {% for education in education_form %}
+                 <div class="col-xs-12 inline {{ education_form.prefix }}">
+
+                <div class="item-block">
+                  <div class="item-form">
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                          <input type="file" class="dropify" data-default-file='{% static "img/logo-default.png"%}'>
+                          <span class="help-block">Please choose a square logo</span>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-8">
+                        <div class="form-group">
+                        {{ education.degree }}
+                        </div>
+
+                        <div class="form-group">
+                        {{ education.major }}
+                        </div>
+                        <div class="form-group">
+                        {{ education.school }}
+                        </div>
+
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Date from</span>
+                            {{ education.datefrom }}
+                            <span class="input-group-addon">Date to</span>
+                            {{ education.dateto }}
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                        {% comment %} <textarea class="form-control" rows="3" placeholder="Short description"></textarea> {% endcomment %}
+                        {{ education.shortdescription }}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+             
+{% comment %} 
+              <div class="col-xs-12 text-center">
+                <br>
+                <button class="btn btn-primary btn-duplicator">Add education</button>
+              </div> {% endcomment %}
+
+
+            </div>
+          </div>
+        </section>
+        <!-- END Education -->
+
+
+        <!-- Work Experience -->
+        <section>
+          <div class="container">
+            <header class="section-header">
+              <span>Past positions</span>
+              <h2>Work Experience</h2>
+            </header>
+            
+            <div class="row">
+
+              {{ experience_form.management_form }}
+              {{ formset.errors }}
+              {% for experience in experience_form %}
+              <div class="col-xs-12 inline {{ experience_form.prefix }}">
+                <div class="item-block">
+                  <div class="item-form">
+  
+                    {% comment %} <button class="btn btn-danger btn-float btn-remove"><i class="ti-close"></i></button> {% endcomment %}
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-4">
+                        <div class="form-group">
+                          <input type="file" class="dropify" data-default-file='{% static "img/logo-default.png"%}'>
+                          <span class="help-block">Please choose a square logo</span>
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-8">
+                        <div class="form-group">
+                        {{ experience.companyname }}
+                          {% comment %} <input type="text" class="form-control" placeholder="Company name"> {% endcomment %}
+                        </div>
+
+                        <div class="form-group">
+                        {{ experience.position }}
+                          {% comment %} <input type="text" class="form-control" placeholder="Position, e.g. UI/UX Researcher"> {% endcomment %}
+                        </div>
+
+                        <div class="form-group">
+                          <div class="input-group">
+                            <span class="input-group-addon">Date from</span>
+                            {{ experience.datefrom }}
+                            {% comment %} <input type="text" class="form-control" placeholder="e.g. 2012"> {% endcomment %}
+                            <span class="input-group-addon">Date to</span>
+                            {{ experience.dateto }}
+                            {% comment %} <input type="text" class="form-control" placeholder="e.g. 2016"> {% endcomment %}
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="col-xs-12">
+                        <div class="form-group">
+                        {{ experience.description }}
+                          {% comment %} <textarea class="summernote-editor"></textarea> {% endcomment %}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% comment %} <div class="col-xs-12 text-center">
+                <br>
+                <button class="btn btn-primary btn-duplicator">Add experience</button>
+              </div> {% endcomment %}
+
+
+            </div>
+
+          </div>
+        </section>
+        <!-- END Work Experience -->
+
+
+        <!-- Skills -->
+        <section class=" bg-alt">
+          <div class="container">
+            <header class="section-header">
+              <span>Expertise Areas</span>
+              <h2>Skills</h2>
+            </header>
+            
+            <div class="row">
+
+           {{ skill_form.management_form }}
+              {{ formset.errors }}
+              {% for skill in skill_form %}
+              <div class="col-xs-12 inline {{ skill_form.prefix }}">
+                <div class="item-block">
+                  <div class="item-form">
+  
+                    {% comment %} <button class="btn btn-danger btn-float btn-remove"><i class="ti-close"></i></button> {% endcomment %}
+
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                        {{ skill.skillname}}
+                          {% comment %} <input type="text" class="form-control" placeholder="Skill name, e.g. HTML"> {% endcomment %}
+                        </div>
+                      </div>
+
+                      <div class="col-xs-12 col-sm-6">
+
+                        <div class="form-group">
+                          <div class="input-group">
+                          {{ skill.proficiency }}
+                            {% comment %} <input type="text" class="form-control" placeholder="Skill proficiency, e.g. 90"> {% endcomment %}
+                            <span class="input-group-addon">%</span>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% comment %} <div class="col-xs-12 text-center">
+                <br>
+                <button class="btn btn-primary btn-duplicator">Add experience</button>
+              </div> {% endcomment %}
+
+
+            </div>
+
+          </div>
+        </section>
+        <!-- END Skills -->
+
+
+
+        <!-- Submit -->
+        <section class=" bg-img" style="background-image: url({% static "img/bg-facts.jpg"%});">
+          <div class="container">
+            <header class="section-header">
+              <span>Are you done?</span>
+              <h2>Submit resume</h2>
+              <p>Please review your information once more and press the below button to put your resume online.</p>
+            </header>
+
+            <p class="text-center"><button class="btn btn-success btn-xl btn-round">Submit your resume</button></p>
+
+          </div>
+        </section>
+        <!-- END Submit -->
+
+
+      </main>
+      <!-- END Main container -->
+
+    </form>
+
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+    $('.inline.{{ education_form.prefix }}').formset({
+        addText: 'add education',
+        deleteText: 'remove'
+    }); 
+
+    $('.inline.{{ experience_form.prefix }}').formset({
+        addText: 'add Experience',
+        deleteText: 'remove'
+    });
+
+     $('.inline.{{ skill_form.prefix }}').formset({
+        addText: 'add SKill',
+        deleteText: 'remove'
+    });
+
+    
+</script>
+
+{% endblock script %}

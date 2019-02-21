@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Post a job position or create your online resume by TheJobs!">
+    <meta name="keywords" content="">
+
+    <title>Login - JobFinder</title>
+
+    <!-- Styles -->
+    <link href= '{% static "css/app.min.css" %}'rel="stylesheet">
+    <link href= '{% static "css/thejobs.css" %}'  rel="stylesheet">
+    <link href='{% static "custom.css" %}' rel="stylesheet">
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Oswald:100,300,400,500,600,800%7COpen+Sans:300,400,500,600,700,800%7CMontserrat:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href='{% static "apple-touch-icon.png" %}'>
+    <link rel="icon" href='{% static "img/favicon.ico" %}'>
+  </head>
+
+  <body class="login-page">
+
+
+    <main>
+
+      <div class="login-block">
+        <img src='{% static "img/logo.png" %}' alt="">
+        <h1>Log into your account</h1>
+        {% comment %} <span>incorrect password</span> {% endcomment %}
+         {% if errors %}
+         <div class="alert alert-danger" role="alert">
+            <strong>Oh snap!</strong> Your username and password didn't match. Please try again.
+          </div>
+        {% endif %}
+        <form method="POST" action="{% url 'JobFinderWeb:login' %}">{% csrf_token %}
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-email"></i></span>
+              <input type="text" class="form-control" placeholder="Username" name="username">
+            </div>
+          </div>
+          
+          <hr class="hr-xs">
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-unlock"></i></span>
+              <input type="password" class="form-control" placeholder="Password" name="password">
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Login</button>
+          <input type="hidden" name="next" value="{{ next }}">
+
+          <div class="login-footer">
+            <h6>Or login with</h6>
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="login-links">
+        <a class="pull-left" href='{% url 'JobFinderWeb:forgotpassword' %}'>Forget Password?</a>
+        <a class="pull-right" href='{% url 'JobFinderWeb:register' %}'>Register an account</a>
+      </div>
+
+    </main>
+
+
+    <!-- Scripts -->
+    <script src='{% static "js/app.min.js" %}'></script>
+    <script src='{% static "js/thejobs.js" %}'></script>
+    <script src='{% static "js/custom.js" %}'></script>
+
+  </body>
+</html>

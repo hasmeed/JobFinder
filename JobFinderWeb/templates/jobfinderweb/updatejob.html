@@ -1,0 +1,155 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+  <form method="POST" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <h2>{{ form.errors }}</h2>
+  <header class="page-header">
+
+
+      <div class="container page-name">
+        <h1 class="text-center">{{ title }}</h1>
+        <p class="lead text-center">Update "{{ object.jobtitle }}" job</p>
+      </div>
+      
+      <div class="container">
+
+        <div class="row"> 
+          <div class="form-group col-xs-12 col-sm-6">
+            <input type="text" value="{{ object.jobtitle }}" class="form-control input-lg" placeholder="Job title, e.g. Front-end developer" name="jobtitle">
+          </div>
+
+         <div class="form-group col-xs-12 col-sm-6">
+         
+           {% comment %} <input type="hidden" name="Company" value="{{ object.Company }}" >  {% endcomment %}
+            {{ form.Company }}
+               {% comment %} <select class="form-control selectpicker">
+              <option>Select a company</option>
+              <option>Google</option>
+              <option>Microsoft</option>
+              <option>Apple</option>
+              <option>Facebook</option>
+            </select>  {% endcomment %}
+            {% comment %} <a class="help-block" href='{% url "JobFinderWeb:newcompany" %}'>Add new company</a> {% endcomment %}
+          </div>
+          <div class="form-group col-xs-12">
+            <textarea class="form-control" rows="3" placeholder="Short description" name="shortdescription">{{ object.shortdescription }} </textarea>
+          </div>
+
+          <div class="form-group col-xs-12">
+            <input type="text" name="applicationurl" class="form-control" placeholder="Application URL">
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+              <input type="text" value="{{ object.location }}"  class="form-control" name="location" placeholder="Location, e.g. Melon Park, CA">
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-briefcase"></i></span>
+              <select class="form-control selectpicker" name="timetype">
+                <option {% if form.timetype.value == "Full Time" %}selected{% endif %} value="Full Time">Full Time</option>
+                      <option {% if form.timetype.value == "Part Time" %}selected{% endif %} value="Part Time">Part Time</option>
+                      <option {% if form.timetype.value == "Internship" %}selected{% endif %} value="Internship">Internship</option>
+                      <option {% if form.timetype.value == "Freelance" %}selected{% endif %} value="Freelance">Freelance</option>
+                      <option {% if form.timetype.value == "Remote" %}selected{% endif %} value="Remote">Remote</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-money"></i></span>
+              <input type="text" value="{{ object.salary }}"  name="salary" class="form-control" placeholder="Salary">
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+              <input name="workinghour" value="{{ object.workinghour }}"  type="text" class="form-control" placeholder="Working hours, e.g. 40">
+              <span class="input-group-addon">hours / week</span>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-flask"></i></span>
+              <input name="yearsofexperience" value="{{ object.yearsofexperience }}"  type="text" class="form-control" placeholder="Experience, e.g. 5">
+              <span class="input-group-addon">Years</span>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6 col-md-4">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-certificate"></i></span>
+              <select name="degree" class="form-control selectpicker" multiple>
+                    <option {% if form.degree.value == "Bachelor" %}selected{% endif %} value="Bachelor">Bachelor</option>
+                      <option {% if form.degree.value == "Master" %}selected{% endif %} value="Master">Master</option>
+                      <option {% if form.degree.value == "Ph.D." %}selected{% endif %} value="Ph.D.">Ph.D.</option>
+                      <option {% if form.degree.value == "Postdoc" %}selected{% endif %} value="Postdoc">Postdoc</option>
+              </select>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="button-group">
+          <div class="action-buttons">
+            <div class="upload-button">
+              <button class="btn btn-block btn-primary">Choose a cover image</button>
+              <input id="cover_img_file" type="file" name='coverimage'>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+
+
+        <!-- Job detail -->
+        <section>
+          <div class="container">
+
+            <header class="section-header">
+              <span>Description</span>
+              <h2>Job detail</h2>
+              <p>Write about your company, job description, skills required, benefits, etc.</p>
+            </header>
+            
+            <textarea  class="summernote-editor" name"description">{{ object.description }}</textarea>
+
+          </div>
+        </section>
+        <!-- END Job detail -->
+
+
+        <!-- Submit -->
+        <section class="bg-alt">
+          <div class="container">
+            <header class="section-header">
+              <span>Are you done?</span>
+              <h2>Submit Job</h2>
+              <p>Please review your information once more and press the below button to put your job online.</p>
+            </header>
+
+            <p class="text-center"><button class="btn btn-success btn-xl btn-round">Submit your job</button></p>
+
+          </div>
+        </section>
+        <!-- END Submit -->
+
+
+    </main>
+</form>
+{% endblock %}

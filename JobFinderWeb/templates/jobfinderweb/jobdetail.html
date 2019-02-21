@@ -1,0 +1,131 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} {{ object }} {% endblock title %}
+{% block content %}
+
+    <header class="page-header bg-img size-lg" style="background-image: url({{ media_url }}{{ object.coverimage }})">
+      <div class="container">
+        <div class="header-detail">
+          <img class="logo" src='{% static "img/logo-google.jpg" %}' alt="">
+          <div class="hgroup">
+            <h1>{{ object.jobtitle }}</h1>
+            <h3><a href="#">{{ object.Company }}</a></h3>
+          </div>
+          <time datetime="2016-03-03 20:00">Posted {{ object.updated | timesince }} ago </time>
+          <hr>
+          <p class="lead">{{ object.shortdescription }}</p>
+
+          <ul class="details cols-3">
+            <li>
+              <i class="fa fa-map-marker"></i>
+              <span>{{ object.location }}</span>
+            </li>
+
+            <li>
+              <i class="fa fa-briefcase"></i>
+              <span>{{ object.timetype }}</span>
+            </li>
+
+            <li>
+              <i class="fa fa-money"></i>
+              <span>{{ object.salary }} / year</span>
+            </li>
+
+            <li>
+              <i class="fa fa-clock-o"></i>
+              <span>{{ object.workinghour }}h / week</span>
+            </li>
+
+            <li>
+              <i class="fa fa-flask"></i>
+              <span>{{ object.yearsofexperience }} years experience</span>
+            </li>
+
+            <li>
+              <i class="fa fa-certificate"></i>
+              <a href="#">{{ object.degree }}</a>
+            </li>
+          </ul>
+
+          <div class="button-group">
+            <ul class="social-icons">
+              <li class="title">Share on</li>
+              <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a class="google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
+              <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+                {% if user.is_authenticated and user.is_provider and itsowner%}
+                    <div class="action-buttons">
+                    <a class="btn btn-primary" href='{% url 'JobFinderWeb:applicants' jobslug=object.slug %}'>Check Applicant List</a>
+                    <a class="btn btn-success" href='{% url 'JobFinderWeb:updatejob' slug=object.slug %}'>Update Job</a>
+                    </div>
+                    {% else %}
+                      {% if alreadyapply %}
+                        <div class="action-buttons">
+                        {% comment %} <a class="btn btn-primary" href="#">Apply with linkedin</a> {% endcomment %}
+                        <a class="btn btn-danger" href='#' disabled>You already Applied</a>
+                        </div>
+                        {% else %}
+                        <div class="action-buttons">
+                        <a class="btn btn-primary" href="#">Apply with linkedin</a>
+                        <a class="btn btn-success" href='{% url 'JobFinderWeb:newapplication' jobslug=object.slug %}'>Apply now</a>
+                        </div>
+                        {% endif %}
+                {% endif %}
+            
+          </div>
+
+        </div>
+      </div>
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+
+      <!-- Job detail -->
+      <section>
+        <div class="container">
+        {{ object.description }}
+
+           <p>Google is and always will be an engineering company. We hire people with a broad set of technical skills who are ready to tackle some of technology's greatest challenges and make an impact on millions, if not billions, of users. At Google, engineers not only revolutionize search, they routinely work on massive scalability and storage solutions, large-scale applications and entirely new platforms for developers around the world. From AdWords to Chrome, Android to YouTube, Social to Local, Google engineers are changing the world one technological achievement after another.</p>
+
+          <br>
+          <h4>Responsibilities</h4>
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non.</p>
+          <ul>
+            <li>Build next-generation web applications with a focus on the client side.</li>
+            <li>Redesign UI's, implement new UI's, and pick up Java as necessary.</li>
+            <li>Explore and design dynamic and compelling consumer experiences.</li>
+            <li>Design and build scalable framework for web applications.</li>
+          </ul>
+
+          <br>
+          <h4>Minimum qualifications</h4>
+          <ul>
+            <li>BA/BS degree in a technical field or equivalent practical experience.  </li>
+            <li>2 years of relevant work experience in software development.</li>
+            <li>Programming experience in C, C++ or Java.</li>
+            <li>Experience with AJAX, HTML and CSS.</li>
+          </ul>
+
+          <br>
+          <h4>Preferred qualifications</h4>
+          <ul>
+            <li>Interest in user interface design.</li>
+            <li>Web application development experience.</li>
+            <li>Experience working on cross-browser platforms.</li>
+            <li>Development experience designing object-oriented JavaScript.</li>
+            <li>Experience with user interface frameworks such as XUL, Flex and XAML.</li>
+            <li>Knowledge of user interface design.</li>
+          </ul>
+
+        </div>
+      </section>
+      <!-- END Job detail -->
+
+    </main>
+
+{% endblock %}

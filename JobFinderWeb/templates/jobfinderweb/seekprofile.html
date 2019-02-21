@@ -1,0 +1,186 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} {{ user.username }} {% endblock title %}
+{% block content %}
+    <header class="page-header bg-img" style="background-image: url({% static "img/bg-banner1.jpg" %})">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <img src='{% static "img/avatar.jpg" %}' alt="">
+          </div>
+
+          <div class="col-xs-12 col-sm-8 header-detail">
+            <div class="hgroup">
+              <h1>{{ object }}</h1>
+              <h3>Front-end developer</h3>
+            </div>
+            <hr>
+            <p class="lead">The front end  is the part that users see and interact with, includes the User Interface, the animations, and usually a bunch of logic to talk to the backend. It is the visual bit that the user interacts with. This includes the design, images, colours, buttons, forms, typography, animations and content. It’s basically everything that you as a user of the website can see.</p>
+
+            <ul class="details cols-2">
+              <li>
+                <i class="fa fa-map-marker"></i>
+                <span>Mountain view, CA</span>
+              </li>
+
+              <li>
+                <i class="fa fa-globe"></i>
+                <a href="#">mywebsite.me</a>
+              </li>
+
+              <li>
+                <i class="fa fa-money"></i>
+                <span>$85 / hour</span>
+              </li>
+
+              <li>
+                <i class="fa fa-birthday-cake"></i>
+                <span>27 years-old</span>
+              </li>
+
+              <li>
+                <i class="fa fa-phone"></i>
+                <span>(+1) 123 456 7890</span>
+              </li>
+
+              <li>
+                <i class="fa fa-envelope"></i>
+                <a href="#">{{ user.email }}</a>
+              </li>
+            </ul>
+
+            <div class="tag-list">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>Bootstrap</span>
+              <span>ReactJS</span>
+              <span>SASS / LESS</span>
+              <span>Grunt / Gulp</span>
+              <span>Wordpress</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <ul class="social-icons">
+            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+            <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+            <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+          </ul>
+
+          <div class="action-buttons">
+            <a class="btn btn-gray" href="#">Update Profile</a>
+            <a class="btn btn-success" data-toggle="modal" data-target="#modal-contact" href="#">Contact me</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+  <section class="no-padding-top bg-alt">
+        <div class="container">
+          {% include 'JobFinderWeb/message.html' %}
+          <header class="section-header">
+            <span>Jobs</span>
+            <h2>Manage Applications</h2>
+          </header>
+          
+          <div class="row">
+
+            <div class="col-xs-12 text-right">
+              <br>
+              <a class="btn btn-primary btn-sm" href='{% url 'JobFinderWeb:joblist' slug=None %}'>Apply for new Job</a>
+            </div>
+
+
+         
+            <!-- Resume item -->
+            {% for application in applications %}
+              <div class="col-xs-12">
+              <div class="item-block">
+                <header>
+                  <a href="resume-detail.html"><img class="resume-avatar" src="assets/img/avatar.jpg" alt=""></a>
+                  <div class="hgroup">
+                    <h4><a href='{% url 'JobFinderWeb:companydetail' slug=application.job.Company.slug %}'>{{ application.job.Company }}</a></h4>
+                    <h5>{{ application.job.jobtitle }} <span class="label label-info">{{ application.applicationstatus }}</span></h5>
+                  </div>
+                  <div class="header-meta">
+                    <span class="location">{{ application.job.location }}</span>
+                    <span class="rate">${{ application.job.salary }} per hour</span>
+                  </div>
+                </header>
+
+                <footer>
+                  <p class="status"><strong>Updated on:</strong> {{ application.job.updated }}</p>
+
+                  <div class="action-btn">
+                    <a class="btn btn-xs btn-gray" href="#">Show</a>
+                    {% comment %} <a class="btn btn-xs btn-gray" href="#">Edit</a> {% endcomment %}
+                    <a class="btn btn-xs btn-danger" href="#">Delete</a>
+                  </div>
+                </footer>
+              </div>
+            </div>
+            {% endfor %}
+            
+            <!-- END Resume item -->
+
+
+          </div>
+        </div>
+
+         <div class="container">
+
+          <header class="section-header" style="margin-top:50px;">
+            <span>RESUMES</span>
+            <h2>Manage Resumes</h2>
+          </header>
+          
+          <div class="row">
+
+            <div class="col-xs-12 text-right">
+              <br>
+              <a class="btn btn-primary btn-sm" href='{% url 'JobFinderWeb:newresumee' %}'>Add new resume</a>
+            </div>
+
+
+         {% for resumee in resumees %}
+            <!-- Resume item -->
+            <div class="col-xs-12">
+              <div class="item-block">
+                <header>
+                  <a href='{{ resumee.get_absolute_url }}'><img class="resume-avatar" src='{% static "img/avatar.jpg" %}' alt=""></a>
+                  <div class="hgroup">
+                    <h4><a href='{{ resumee.get_absolute_url }}'>{{ resumee.name }}</a></h4>
+                    <h5>{{ resumee.headline }} <span class="label label-info">{{ resumee.status }}</span></h5>
+                  </div>
+                  <div class="header-meta">
+                    <span class="location">{{ resumee.location }}</span>
+                    <span class="rate">${{ resumee.salary }} per hour</span>
+                  </div>
+                </header>
+
+                <footer>
+                  <p class="status"><strong>Updated on:</strong> {{ resumee.updated }}</p>
+
+                  <div class="action-btn">
+                    <a class="btn btn-xs btn-gray" href="#"> {% if resumee.status == 'show' %}Hide{% else%}Show{% endif %}</a>
+                    {% comment %} <a class="btn btn-xs btn-gray" href='{% url 'JobFinderWeb:resumeupdate' slug=resumee.slug %}'>Edit</a> {% endcomment %}
+                    <a class="btn btn-xs btn-danger" href="#">Delete</a>
+                  </div>
+                </footer>
+              </div>
+            </div>
+            <!-- END Resume item -->
+         {% endfor %}
+          
+
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+{% endblock content %}

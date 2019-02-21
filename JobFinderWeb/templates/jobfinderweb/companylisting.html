@@ -1,0 +1,114 @@
+{% extends 'JobFinderWeb/base.html' %}
+{% load static %}
+{% block title %} Companies {% endblock title %}
+{% block content %}
+<header class="page-header bg-img" style="background-image: url({% static "img/bg-banner1.jpg" %});">
+      <div class="container page-name">
+        <h1 class="text-center">Browse companies</h1>
+        <p class="lead text-center">Use following search box to find companies that fits you better</p>
+      </div>
+
+      <div class="container">
+        <form>
+          <div class="row">
+          <input type="hidden" name='search' value={{ cat }}>
+            <div class="form-group col-xs-12 col-sm-4">
+              <input type="text" class="form-control" placeholder="Keyword">
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-4">
+              <input type="text" class="form-control" placeholder="Location" name="location" value={{ location }}>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-4">
+              <select class="form-control selectpicker" name="cat">
+                <option selected value="All Category">All categories</option>
+                <option value="Developer">Developer</option>
+                <option value="Designer">Designer</option>
+                <option value="Customer service">Customer service</option>
+                <option value="Finance">Finance</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Sale">Sale</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Information Technology">Information technology</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="button-group">
+            <div class="action-buttons">
+              <button class="btn btn-primary">Apply filter</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </header>
+    <!-- END Page header -->
+
+
+    <!-- Main container -->
+    <main>
+      <section class="no-padding-top bg-alt">
+        <div class="container">
+          <div class="row">
+
+            <div class="col-xs-12">
+              <br>
+              <h5>We found <strong>{{ object_list.count }} </strong> matches in <a style="color:skyblue;" href="#">{{ cat }}</a><h5>
+            </div>
+
+                {% for company in object_list %}
+
+                        <div class="col-xs-12">
+                    <a class="item-block" href='{{ company.get_absolute_url }}'>
+                        <header>
+                        <img src='{% static "img/logo-google.jpg" %}' alt="">
+                        <div class="hgroup">
+                            <h4>{{ company.companyname }}</h4>
+                            <h5>{{ company.headline }}</h5>
+                        </div>
+                        <span class="open-position">{{ company.countjob }} open position</span>
+                        </header>
+
+                        <div class="item-body">
+                        <p>{{ company.shortdescription }}</p>
+                        </div>
+                    </a>
+                    </div>
+                {% endfor %}
+            <!-- Company detail -->
+            
+            <!-- END Company detail -->
+
+
+            <!-- Page navigation -->
+            <nav class="text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="#" aria-label="Previous">
+                    <i class="ti-angle-left"></i>
+                  </a>
+                </li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li class="active"><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <i class="ti-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- END Page navigation -->
+
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock %}
